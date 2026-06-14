@@ -1,0 +1,338 @@
+\documentclass[11pt,letterpaper]{article}
+% --- Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage{microtype}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+% --- Color Palette (De-saturated, Academic & Professional) ---
+\definecolor{ajpblue}{RGB}{28, 54, 115}   % Deep navy accent
+\definecolor{ajpsec}{RGB}{54, 95, 145}   % Secondary slate blue
+\definecolor{bglight}{RGB}{245, 247, 250} % Light background for callout boxes
+\definecolor{bordergrey}{RGB}{210, 215, 223}
+% --- Hyperref Setup ---
+\hypersetup{
+colorlinks=true,
+linkcolor=ajpblue,
+citecolor=ajpsec,
+urlcolor=ajpblue
+}
+% --- Typography & Headings Styling ---
+\titleformat{\section}{\large\bfseries\color{ajpblue}}{\thesection}{1em}{}[{\titlerule[0.5pt]}]
+\titleformat{\subsection}{\normalsize\bfseries\color{ajpsec}}{\thesubsection}{1em}{}
+% --- Custom Environments for Explanation ---
+\newtcolorbox{equationbreakdown}[1]{
+colback=bglight,
+colframe=ajpblue,
+fonttitle=\bfseries,
+title={Derivation Details \& Interpretation: #1},
+arc=3pt,
+boxrule=1pt,
+bottomtitle=2mm,
+toptitle=2mm
+}
+\newtcolorbox{physicsinsight}{
+colback=bglight,
+colframe=ajpsec,
+boxrule=0.5pt,
+left=4mm,
+right=4mm,
+top=3mm,
+bottom=3mm,
+arc=2pt,
+sharp corners=false
+}
+% --- Title & Project Metadata ---
+\title{
+\vspace{-1.5in}
+\rule{\linewidth}{1.5pt} \\ \vspace{4mm}
+\large\textbf{PHYSICS GROUP PROJECT REPORT} \\ \vspace{2mm}
+\Large\textbf{An Explanatory Guide and Step-by-Step
+Derivation of: \\ ``[The flight of Newton's cannonball]''}
+\\ \vspace{4mm}
+\large\textit{Based on the Article in the American Journal of
+Physics} \\
+\rule{\linewidth}{1.5pt}
+}
+% Multi-column author format for a group project
+\author{
+\begin{tabular}{r @{\quad} l}
+\textbf{Project Group:} & [e.g., Group 4 / Team
+Resonance] \\[1ex]
+\textbf{Group Members:} & Do-hyeon Kwon
+(\textit{Derivations \& Mathematical Layout}) \\
+& Yejun Jang (\textit{Computational Modeling \& Plots}) \\
+& Minyoung Joo (\textit{Derivations \& Mathematical Layout}) \\[1ex]
+\textbf{Course Title:}  & [General Physics] \\
+\textbf{Instructor:}    & Dr. DEVECIOGLU  \\
+\textbf{Department:}    & Department of Physics, DGIST
+\end{tabular}
+}
+\date{\today}
+\begin{document}
+\maketitle
+\begin{abstract}
+This project provides a comprehensive, pedagogical breakdown of the foundational paper “The flight of Newton’s cannonball” by W. Dean Pesnell, published in the American Journal of Physics (Volume 86, Pages 338–343, 2018)
+. While the original text assumes a certain level of mathematical and physical maturity, this report fills in the intermediate algebraic steps, explains the contextual physics principles, and interprets key equations
+. We reconstruct the derivations of the central models—specifically the patching of exterior Keplerian orbits with interior quasi-Keplerian trajectories—analyze physical approximations such as the constant-density Earth model, and discuss the implications of the results for future orbital transport systems.
+\end{abstract}
+\tableofcontents
+\newpage
+% =========================================================================
+\section{Introduction \& Contextual Background}
+% =========================================================================
+One-dimensional motion is the most basic starting point in classical mechanics. As an object travels along a straight path, motion can be described through the relationship between position, velocity, and acceleration, which is formulated by Newton's law of motion. This simple concept of one-dimensional motion still provides a key framework for forces such as gravity to act.
+
+Isaac Newton presented a thought experiment to imagine the trajectory of cannonballs fired horizontally from the Earth's north pole, which does not rotate, to explain the motion of the planet around the Earth. Depending on the firing speed, the cannonballs simply fall to the ground, reach the other side of the Earth, orbit the Earth in a circular or elliptical orbit, or leave the Earth when they reach the escape speed. All of these cases can be understood as an extended concept of one-dimensional motion under a constant force.
+
+In other words, the motion of the cannonball basically begins with a combination of the horizontal constant acceleration motion and the vertical constant acceleration motion. The trajectory is then transformed into a curve rather than a straight line due to the influence of gravity toward the center of the Earth, but its essence starts from the basic principle of one-dimensional motion. Therefore, Newton's thought experiment is an important example of how the simple concept of linear motion can be extended to explain complex motion such as planetary orbits.
+
+In this paper, we intend to modernize Newton's cannonball thought experiment and connect it to an orbital tunnel model that passes through the inside of the Earth based on this basic concept of one-dimensional motion. This explores how physical thought, which started from simple straight-line motion, can lead to planetary motion, orbital mechanics, and the concept of a new transportation system.
+\subsection{Historical and Pedagogical Significance}
+This study, much like those published in the American Journal of Physics, engages with Newton’s cannonball thought experiment by situating an idealized scenario within the framework of potential real-world applications. While the present work also assumes idealized conditions, there exists a relative scarcity of research that examines Newton’s original thought experiment from an applied perspective. Consequently, this paper is well positioned to contribute to the broader theme of analyzing classical physics problems through modern interpretations, thereby offering a novel lens through which foundational concepts in mechanics may be reconsidered.
+\begin{itemize}
+\item The core thesis of the paper is newton's cannonball thesis.
+\item The targeted student audience is upper-level undergraduate physics students.
+\item Traditional methods describe orbital motion qualitatively or focus on chord tunnels, while the author proposes an orbital tunnel model that can connect a wider latitude range by quantitatively analyzing the trajectory of horizontally fired cannonballs.
+\end{itemize}
+
+\subsection{Physical Setup and System Parameters}
+
+The selection of symbols is based on fundamental planetary constants and normalized parameters, such as the altitude factor a and muzzle velocity ratio f, to simplify the transition between different gravitational regimes
+. The derivation rationale is grounded in the conservation of specific angular momentum and total energy, which allows for the continuous "patching" of exterior Keplerian ellipses with interior quasi-Keplerian trajectories
+. By utilizing a homogeneous Earth model where gravity varies linearly with radius, these variables effectively quantify the projectile's motion, impact angle, and total flight time through the Earth's core
+. This structured approach reduces complex orbital mechanics into an analytical framework suitable for calculating transport kinematics, such as the proposed "burrito delivery service".
+
+\begin{table}[h!]
+\centering
+\caption{Key Symbols, Constants, and Variables used in the Analysis.}
+\label{tab:variables}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Physical Meaning} & \textbf{SI Units} \\
+\midrule
+$R_{\oplus}$ & Radius of the Earth (6371 km) & $\text{m}$ \\
+$M_{\oplus}$ & Mass of the Earth ($5.972 \times 10^{24}$ kg) & $\text{kg}$ \\
+$G$ & Gravitational constant ($6.674 \times 10^{-11}$) & $\text{m}^3 \text{kg}^{-1} \text{s}^{-2}$ \\
+$r_A$ & Apogee distance ($R + h$) & $\text{m}$ \\
+$a$ & Normalized radius factor ($R/r_A$) & Dimensionless \\
+$v_M$ & Muzzle velocity & $\text{m/s}$ \\
+$v_c$ & Circular orbital velocity at altitude $r_A$ & $\text{m/s}$ \\
+$f$ & Muzzle velocity ratio ($v_M^2/v_c^2$) & Dimensionless \\
+$e$ & Orbital eccentricity ($1-f$) & Dimensionless \\
+$L$ & Specific angular momentum & $\text{m}^2/\text{s}$ \\
+$k^2$ & Normalized specific angular momentum ($f/a$) & Dimensionless \\
+$E_T$ & Normalized total energy & Dimensionless \\
+$x$ & Normalized radial distance ($r/R_{\oplus}$) & Dimensionless \\
+$\theta_0$ & Striking (impact) angle & $\text{rad}$ \\
+$\phi_s$ & Internal ingress/egress angle & $\text{rad}$ \\
+$\Delta u_s$ & Travel angle (angular distance) & $\text{rad}$ \\
+$\Delta s$ & Total travel time inside the Earth & $\text{s (or min)}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Equations Governing Newton's Cannonball}
+
+To analyze the flight of Newton’s cannonball, we first consider the initial conditions. The cannonball is fired horizontally from the top of a high mountain of height $h$. Ignoring the Earth's rotation and air resistance, the cannonball follows a Keplerian orbit in the Earth's gravitational field. If the muzzle velocity $v_A$ is less than the circular orbit velocity $v_c$ at that altitude, the launch point represents the apogee (the farthest point from the center of the Earth) of an elliptical orbit. Let $R$ be the radius of the Earth. The distance from the center of the Earth to the apogee is defined as $r_A = R + h$ [1].
+
+\subsection{Dimensionless Velocity Parameter and Orbit Equation}
+To simplify the orbital mechanics, we introduce a dimensionless parameter $f$, defined as the ratio of the square of the muzzle velocity $v_A$ to the square of the circular orbit velocity $v_c = \sqrt{GM/r_A}$:
+\begin{equation}
+    f = \frac{v_A^2}{v_c^2} = \frac{r_A v_A^2}{GM}
+\end{equation}
+
+Since the cannonball is fired horizontally, the specific angular momentum is conserved and given by $L = r_A v_A$. The general polar equation for a conic section orbit is $r(\theta) = \frac{p}{1 + e \cos\theta}$, where $p = \frac{L^2}{GM}$. Substituting $L$ into $p$ yields:
+\begin{equation}
+    p = \frac{(r_A v_A)^2}{GM} = r_A \left( \frac{r_A v_A^2}{GM} \right) = r_A f
+\end{equation}
+
+At the apogee ($\theta = \pi$), the distance must be $r_A$. We can determine the orbital eccentricity $e$ by substituting this condition into the polar equation:
+\begin{equation}
+    r(\pi) = \frac{r_A f}{1 - e} = r_A \implies 1 - e = f \implies e = 1 - f
+\end{equation}
+
+Thus, the fundamental equation governing the orbit of the cannonball is expressed as:
+\begin{equation}
+    r(\theta) = \frac{r_A f}{1 + (1 - f)\cos\theta}
+\end{equation} [2].
+
+\subsection{Striking the Earth's Surface}
+A cannonball will strike the Earth if its orbital path intersects the Earth's surface, which occurs when $r(\theta_0) = R$. Substituting this into our orbit equation, we get:
+\begin{equation}
+    R = \frac{r_A f}{1 + (1 - f)\cos\theta_0}
+\end{equation}
+
+By defining $\alpha = \frac{R}{r_A}$ as the ratio of the Earth's radius to the apogee distance, we divide both sides by $r_A$:
+\begin{equation}
+    \alpha = \frac{f}{1 + (1 - f)\cos\theta_0}
+\end{equation}
+
+Rearranging this equation to solve for the striking angle $\theta_0$ yields the condition for the impact location:
+\begin{equation}
+    \cos\theta_0 = \frac{f - \alpha}{\alpha(1 - f)}
+\end{equation} [3].
+
+\subsection{The Limiting Condition for a Full Orbit}
+As the initial velocity increases, the perigee (closest approach) gets further from the Earth's center. The critical threshold where the cannonball exactly grazes the Earth's surface without crashing corresponds to the condition where the impact angle $\theta_0 = 0$. Setting $\cos\theta_0 = 1$ gives:
+\begin{equation}
+    1 = \frac{f_{max} - \alpha}{\alpha(1 - f_{max})}
+\end{equation}
+\begin{equation}
+    f_{max} = \frac{2\alpha}{1 + \alpha}
+\end{equation}
+
+This physical reasoning demonstrates that if $f < f_{max}$, the cannonball falls to the Earth. Once the muzzle velocity reaches the critical value corresponding to $f \ge f_{max}$, the cannonball successfully enters a continuous orbit [4].
+
+\section{On the Properties of Interior Quasi-Keplerian Orbits}
+
+\subsection{Concept of Quasi-Keplerian Orbits}
+When a projectile penetrates the surface and enters the Earth's interior, it is no longer affected by external gravity, which acts as if the Earth's entire mass were concentrated at the center [1]. Instead, according to the homogeneous sphere model, the projectile is placed in an environment where gravity decreases linearly in proportion to distance as it approaches the center of the Earth [1]. 
+
+In this case, the trajectory traced by the projectile is not a standard Keplerian ellipse with the Earth's center as one focus, but a special type of ellipse with the Earth's center itself as the center [1, 2]. This is called a \textbf{'quasi-Keplerian' orbit}, and it is analyzed by continuously connecting the energy and angular momentum conditions obtained from the external elliptical orbit to fit the internal model [2].
+
+\subsection{Derivation of Formulas}
+
+To express the normalized distance ($x=r/R_{\oplus}$) as a function of the angle ($\phi$), the conserved quantities of the outer orbit are converted into internal variables [2].
+
+\subsubsection{1. Angular Momentum}
+We take the angular momentum equation for an external Kepler ellipse and define it as:
+\begin{equation}
+    k^2 = \frac{f}{a}
+\end{equation}
+Where $f$ is the Muzzle Velocity Ratio and $a$ represents variables related to the height of the actual mountain where Newton's cannon is located [3].
+
+\subsubsection{2. Total Energy}
+We use the normalized energy formula:
+\begin{equation}
+    E_T = -\frac{a(2-f)}{2}
+\end{equation}
+[3].
+
+\subsubsection{3. Orbital Equations}
+After calculating the energy expression in the denominator using the general formula, the equation is completed by substituting $f/a$ in the $k^2$ place and $3-a(2-f)$ in the energy term place [3, 4].
+
+The general formula is:
+\begin{equation}
+    x^2 = \frac{(3+2E_T) - \sqrt{(3+2E_T)^2 - 4k^2} \cos(2\phi)}{2f/a}
+\end{equation}
+Substituting $3+2E_T = 3-a(2-f)$, we derive:
+\begin{equation}
+    x^2 = \frac{[3-a(2-f)] - \sqrt{[3-a(2-f)]^2 - 4f/a} \cos(2\phi)}{2f/a}
+\end{equation}
+This equation is the result of adjusting by rotating by $-\pi/4$ so that the apogee is at $\phi = 0$ [4].
+
+\subsubsection{4. Induction of Movement Angle ($\Delta u_s$)}
+The point where the projectile passes through the surface (ingress, egress) is the point at distance $x=1$, so $x^2$ is also 1 [4]. By setting $x^2 = 1$ and solving for $\phi_s$, and considering the geometric symmetry where $\Delta u_s = \pi - 2\phi_s$, we rearrange using the properties of inverse trigonometric functions [4, 5]:
+\begin{equation}
+    \Delta u_s = \arccos \left[ \frac{2f/a - [3-a(2-f)]}{\sqrt{[3-a(2-f)]^2 - 4f/a}} \right]
+\end{equation}
+[5].
+
+\subsubsection{5. Derivation of Travel Time ($\Delta s$)}
+Assuming the Earth's interior is a homogeneous sphere, the trajectory of a projectile becomes part of an ellipse centered on the Earth [5]. Because this ellipse is geometrically perfectly symmetrical, the total time from entry to exit is exactly twice the time it takes to travel from the point closest to the Earth's center to the surface [5, 6].
+
+The travel time in minutes is derived as:
+\begin{equation}
+    \Delta s = 13.4 \arccos \left[ \frac{1-a(2-f)}{\sqrt{[3-a(2-f)]^2 - 4f/a}} \right] \text{ (min)}
+\end{equation}
+The coefficient \textbf{13.4} is derived by dividing the Schuler period (the time to orbit the Earth's surface, approximately 84.4 minutes) by $2\pi$ ($84.4/2\pi \approx 13.43$) [6]. This coefficient is a leading factor that applies equally whether the projectile enters a parabolic or elliptical trajectory [6, 7].
+
+=========================================================================
+\section{Physical Approximations and Limiting Cases}
+% =========================================================================
+AJP articles frequently explore edge cases and limits to provide students with intuitive insight. In this section, we analyze the core approximations used by Pesnell to model the orbital tunnels and investigate how the system behaves at extreme muzzle velocities.
+
+\subsection{The Homogeneous Earth Model Approximation}
+The most significant physical approximation in the paper is the assumption that the Earth is a \textbf{sphere of constant density} [1, 2]. While the actual Earth has a dense core and a lighter mantle, this simplification allows for an analytic solution where the gravitational acceleration increases linearly with radius ($g \propto r$) [2]. 
+
+Under this approximation, the interior potential becomes harmonic, and the resulting trajectories are sections of an ellipse centered at the Earth's center [2, 3]. This provides a pedagogical "bridge" between the external Keplerian motion (one focus at the center) and internal simple harmonic motion (center of the ellipse at the center of the Earth) [4, 5].
+
+\subsection{The Low-Velocity Limit ($f \to 0$)}
+What happens to the orbital tunnel when the muzzle velocity is near zero? As the parameter $f$ (the muzzle velocity ratio) approaches zero, the paper notes several key physical behaviors:
+\begin{itemize}
+    \item \textbf{Vertical Entry:} The angle of incidence at the surface ($i_{ell}$) becomes small, representing a near-vertical entry [6].
+    \item \textbf{Minimal Deflection:} As the cannonball approaches the center, the interior gravitational acceleration decreases. In the limit $f \to 0$, the projectile flies through the Earth with almost no deflection, passing directly through the center [7].
+    \item \textbf{Antipodal Emergence:} Despite the low initial horizontal velocity, the projectile still exits close to the antipodal point due to the linear nature of the interior force [7].
+\end{itemize}
+
+\subsection{The Tangent Orbit Limit ($f \to f_{max}$)}
+As the muzzle velocity increases toward the critical value $f_{max} = 2a / (1 + a)$, the cannonball no longer crashes but rather skims the surface [8]. 
+\begin{equation}
+    \lim_{f \to f_{max}} \cos \theta_0 = 1
+\end{equation}
+At this limit, the angle of incidence $i_{ell}$ becomes large, and the cannonball "skims" the surface at the antipodal point before returning to its starting altitude [6, 8]. This serves as the boundary between a "transport tunnel" trajectory and a standard closed orbit.
+
+\subsection{Neglect of Earth's Rotation}
+The primary model assumes a \textbf{non-rotating Earth} to keep the analysis in an inertial frame [9, 10]. However, the author acknowledges that in a real-world scenario, the Earth would rotate during the flight time ($\Delta s \approx 10-24$ minutes) [10, 11]. 
+\begin{equation}
+    \Delta x_{rotation} \approx v_{rotation} \times \Delta s
+\end{equation}
+The paper provides a limiting case where an eastward-moving cannonball would exit roughly 300 km west of the predicted inertial egress point due to this neglected rotation [10]. This approximation highlights that while the inertial kinematics are symmetric, a real transport tunnel cannot be used for a simple round trip without correcting for the Coriolis effect [10].
+
+=========================================================================
+\section{Computational or Experimental Verification}
+% =========================================================================
+In this section, we document the numerical verification of the "Burrito Delivery Service" model proposed in the Appendix of the original paper. By implementing a companion Python script, we solve the inverse problem: finding the specific launch parameters required to connect two geographical points and analyzing the physical deviations caused by planetary rotation.
+
+\subsection{Numerical Comparison with Analytical Results}
+
+To verify the analytical models for travel angle ($\Delta u_s$) and travel time ($\Delta s$), we developed a simulation based on Equations (9) and (10). We focused on the proposed delivery route between California and New York, which requires a travel angle of approximately $D_{us} = 38^\circ$.
+
+\subsubsection{1. Replicating Table I Data}
+Using a fixed mountain height parameter $a = 0.7$, we iterated through the muzzle velocity ratios ($f$) to match the results in Table I. Our script confirmed that as $f$ increases, the exit point moves further from the antipodal point. Specifically, for a delivery to a target $38^\circ$ from the launch site, we found that a specific combination of $a$ and $f$ must be chosen. For instance, at $a=0.7$, a very high $f$ (approaching $f_{max} \approx 0.823$) is required to reduce the angular distance from the default antipodal emergence toward the $38^\circ$ target.
+
+\subsubsection{2. The "Burrito Delivery" Case Study}
+The simulation specifically addressed the sample exercise (6) regarding a delivery service.
+\begin{itemize}
+    \item \textbf{Target Angle:} $D_{us} = 38^\circ$.
+    \item \textbf{Analytical Verification:} By substituting $D_{us} = 38^\circ$ into Equation (9), our numerical solver identified the precise $f$ value for a given $a$. 
+    \item \textbf{Travel Time:} Using Equation (10), we calculated the "freshness" of the delivery. For $a=0.7$, the travel time stays within the 10.4 to 24.2-minute range, significantly outperforming traditional transport methods.
+\end{itemize}
+
+\subsection{Modeling the Coriolis Deviation}
+
+As noted by the author in Section IV.A, an inertial frame simulation is insufficient for a real-world transport tunnel. We added a rotation module to our script to estimate the "Egress Offset." 
+
+\begin{equation}
+    \Delta x_{rotation} \approx \Omega_{Earth} \times R_{Earth} \times \Delta s
+\end{equation}
+
+For a 20-minute flight ($\Delta s \approx 20$ min), our computational model shows that the payload (the burrito) would exit approximately \textbf{300 km west} of the intended egress point. This numerical result emphasizes that the tunnel must be bored with a curved geometry in the rotating frame, or the launch velocity must be compensated to account for the Earth rotating "out from under" the projectile.
+
+\begin{figure}[h]
+    \centering
+    %\includegraphics[width=0.7\textwidth]{burrito_orbit_plot.png} 
+    \caption{Replication of the interior quasi-Keplerian trajectories. The plot demonstrates how varying $f$ allows the projectile to target specific angular distances like the $38^\circ$ California-NY route.}
+\end{figure}
+
+\subsection{Physical Conceptualization}
+In practice, the simulation reveals that while the kinematics of orbital tunnels are theoretically sound, the high muzzle velocities ($v_m \approx 6$ km/s) and the requirement for a vacuum environment within the tunnel present significant engineering challenges. However, our numerical tracking confirms the author's claim that these tunnels offer a unique "focusing effect" near the antipodal point for a wide range of initial velocities.
+
+=========================================================================
+\section{Critical Analysis and Commentary}
+% =========================================================================
+In this paper, there are (1) hypotheses that the density inside the Earth is constant, (2) that the Earth does not rotate, (3) that there is no air resistance or friction when cannonballs pass through the Earth, and (4) that tunnels are pierced into the inertial system, and these are unjustified assumptions.
+This paper will be easy to explain to undergraduate students using simulation programs as we did.
+
+=========================================================================
+\section{Conclusion}
+% =========================================================================
+This paper discusses the classical model of Newton's Canonball model again in the present. By directly solving the intermediate mathematical operations presented in this paper, we have come to understand not only Newton's model but also what the author of the paper discussed additionally, to the extent that it can be applied directly without going overboard with visual imagination, and even simulating thought experiments with simple coding. As a result, we have achieved great growth in many areas through this project, including physical understanding, simulation, and application of LaTeX programs.
+
+======================================================================
+\begin{thebibliography}{99}
+% =========================================================================
+\bibitem{originalpaper}
+Pesnell, W. D. (2018). “The flight of Newton’s cannonball.” American Journal of Physics, 86(5), 338–343. 
+\bibitem{textbook}
+Halliday, D., Resnick, R., \& Walker, J. (2014). Fundamentals of Physics. 10th Edition, Wiley.
+\end{thebibliography}
+\end{document}
+
